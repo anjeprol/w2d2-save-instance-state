@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SaveInstanceTest</string>
+    <string name="set_value_btn">Set value to int</string>
+    <string name="log_value">Log value</string>
+</resources>
