@@ -13,12 +13,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivityTAG_";
     private static final String INT_KEY_BUNDLE = "INT_KEY_BUNDLE";
+    private static final String CUSTOM_KEY_BUNDLE = "CUSTOM_KEY_BUNDLE";
 
     private ArrayList<String> mArrayList;
 
     private EditText mEditText;
 
     private int mInt;
+    private CustomObject mCustomObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
         mArrayList = new ArrayList<>();
         mInt = 0;
+        mCustomObject = new CustomObject();
 
         mEditText = (EditText) findViewById(R.id.a_main_et_1);
+
+        if (savedInstanceState == null){
+            Log.d(TAG, "onCreate: Nothing passed");
+        }
 
         Log.d(TAG, "onCreate: ");
     }
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
 
         outState.putInt(INT_KEY_BUNDLE, mInt);
+        outState.putParcelable(CUSTOM_KEY_BUNDLE, mCustomObject);
 
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: ");
@@ -77,15 +85,20 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         mInt = savedInstanceState.getInt(INT_KEY_BUNDLE);
+        mCustomObject = savedInstanceState.getParcelable(CUSTOM_KEY_BUNDLE);
 
         Log.d(TAG, "onRestoreInstanceState: ");
     }
 
     public void logValue(View view) {
         Log.d(TAG, "logValue: " + mInt);
+        Log.d(TAG, "logValue: " + mCustomObject.getAge());
     }
 
     public void setValue(View view) {
-        mInt = Integer.parseInt(mEditText.getText().toString());
+        int value = Integer.parseInt(mEditText.getText().toString());
+
+        mInt = value;
+        mCustomObject.setAge(value);
     }
 }
